@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 
+const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_KEY;
+
 const SYSTEM_PROMPT = `Tu es un assistant intelligent, précis et efficace. Tu réponds aux questions de manière claire et structurée. 
 Si la question est technique, tu fournis des explications détaillées. 
 Tu utilises parfois des emojis pour rendre les réponses plus lisibles.
@@ -84,19 +86,25 @@ export default function App() {
     setError(null);
 
     try {
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1000,
-          system: SYSTEM_PROMPT,
-          messages: newMessages,
-        }),
-      });
+      const history = newMessages.map(m => ({
+        role: m.role === "user" ? "user" : "model",
+        parts: [{ text: m.content }]
+      }));
+
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+            contents: history,
+          }),
+        }
+      );
       if (!response.ok) throw new Error();
       const data = await response.json();
-      const reply = data.content?.map(b => b.text || "").join("") || "Aucune réponse.";
+      const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Aucune réponse.";
       setMessages([...newMessages, { role: "assistant", content: reply }]);
     } catch {
       setError("Une erreur est survenue. Réessaie.");
