@@ -1,1 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>FOOTANIME - Manager Football Anime</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/anime-theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- ÉCRAN DE CHARGEMENT -->
+    <div id="loading-screen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">⚡ FOOTANIME ⚡</div>
+        <div class="loading-sub">Chargement du monde...</div>
+    </div>
 
+    <!-- ÉCRAN CHOIX CARRIÈRE -->
+    <div id="career-screen" style="display:none">
+        <div class="anime-bg"></div>
+        <div class="career-container">
+            <h1 class="anime-title">🏆 NOUVELLE CARRIÈRE 🏆</h1>
+            <p class="career-subtitle">Choisis ton club de départ</p>
+            <div id="job-offers" class="job-offers"></div>
+        </div>
+    </div>
+
+    <!-- ÉCRAN PRINCIPAL -->
+    <div id="game-screen" style="display:none">
+        <header>
+            <div class="logo">⚡ FOOTANIME ⚡</div>
+            <div class="club-info" id="club-info"></div>
+            <div class="budget-info" id="budget-info"></div>
+            <div class="date-info" id="date-info"></div>
+        </header>
+
+        <div class="app">
+            <aside>
+                <button class="btn-advance" id="btn-next-day">▶ JOUR SUIVANT</button>
+                <div class="nav-section">CLUB</div>
+                <button class="nav-btn" data-screen="squad">👥 EFFECTIF</button>
+                <button class="nav-btn" data-screen="tactics">⚙️ TACTIQUES</button>
+                <button class="nav-btn" data-screen="training">🏋️ ENTRAÎNEMENT</button>
+                <div class="nav-section">MARCHÉ</div>
+                <button class="nav-btn" data-screen="transferlist">📋 LISTE TRANSFERT</button>
+                <button class="nav-btn" data-screen="market">💸 TRANSFERTS</button>
+                <div class="nav-section">COMPÉTITIONS</div>
+                <button class="nav-btn" data-screen="league">📊 CHAMPIONNAT</button>
+                <div class="nav-section">STATS</div>
+                <button class="nav-btn" data-screen="results">🏁 RÉSULTATS</button>
+                <button class="nav-btn" data-screen="stats">📈 STATISTIQUES</button>
+            </aside>
+
+            <main>
+                <!-- LIVE MATCH -->
+                <div id="live-match" style="display:none">
+                    <div class="live-vs">
+                        <span id="live-home">HOME</span>
+                        <span class="live-score" id="live-score">0 - 0</span>
+                        <span id="live-away">AWAY</span>
+                    </div>
+                    <div class="live-minute" id="live-minute">0'</div>
+                    <div class="live-event" id="live-event">Coup d'envoi !</div>
+                    <div id="live-events"></div>
+                </div>
+
+                <!-- ÉCRANS -->
+                <div id="screen-squad" class="screen active">
+                    <div class="page-title">📋 EFFECTIF <span id="squad-count"></span></div>
+                    <div id="player-list" class="grid"></div>
+                </div>
+
+                <div id="screen-transferlist" class="screen">
+                    <div class="page-title">📋 LISTE DE TRANSFERT</div>
+                    <div id="transferlist-list" class="grid"></div>
+                </div>
+
+                <div id="screen-tactics" class="screen">
+                    <div class="page-title">⚙️ TACTIQUES</div>
+                    <div id="formation-select" class="formation-select"></div>
+                    <div id="pitch" class="pitch"></div>
+                </div>
+
+                <div id="screen-training" class="screen">
+                    <div class="page-title">🏋️ ENTRAÎNEMENT</div>
+                    <div id="training-list" class="grid"></div>
+                </div>
+
+                <div id="screen-market" class="screen">
+                    <div class="page-title">💸 MARCHÉ DES TRANSFERTS</div>
+                    <div id="market-list" class="grid"></div>
+                </div>
+
+                <div id="screen-league" class="screen">
+                    <div class="page-title">📊 CLASSEMENT</div>
+                    <div class="tbl-wrap"><table id="league-table"><tbody></tbody></table></div>
+                </div>
+
+                <div id="screen-results" class="screen">
+                    <div class="page-title">🏁 RÉSULTATS</div>
+                    <div id="results-list"></div>
+                </div>
+
+                <div id="screen-stats" class="screen">
+                    <div class="page-title">📈 STATISTIQUES</div>
+                    <div id="stats-content"></div>
+                </div>
+
+                <div id="log">📢 Bienvenue dans FOOTANIME !</div>
+            </main>
+        </div>
+    </div>
+
+    <div id="toast"></div>
+
+    <script src="js/data/clubs.js"></script>
+    <script src="js/data/players.js"></script>
+    <script src="js/core/game.js"></script>
+    <script src="js/core/match.js"></script>
+    <script src="js/ui/screens.js"></script>
+    <script src="js/save.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
